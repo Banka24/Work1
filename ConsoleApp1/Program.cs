@@ -3,46 +3,79 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace ConsoleApp1
 {
     class Program
     {
-        static void ChangeFirstElement<T>(ref T[] array, T elem)
+        static void BetterResize(ref char[] array)
         {
-           array[0] = elem;          
-        }
-        static void ChangeLastElement<T>(ref T[] array, T elem)
-        {
-            array[array.Length - 1] = elem;            
+            int size = 0;
+            foreach(char i in array)
+            {
+                if(i != '\0')
+                {
+                    size++;                   
+                }
+            }
+            //Array.Resize(ref array, size);
         }
 
-        static void ChangeElement<T>(ref T[] array, int index, T elem)
+        static void GetLetters(in string getLine, ref char[] setChars)
         {
-            array[index] = elem;            
+            for (int i = 0; i < getLine.Length; i++)
+            {
+                if (Char.IsLetterOrDigit(getLine[i]))
+                {
+                    setChars[i] = getLine[i];
+                }
+            }
+            BetterResize(ref setChars);
+            
         }
+
+        static bool IsPalendrom(in string line)
+        {
+            bool result = true;
+            char[] newLine = line.Reverse().ToArray();
+            for (int i = 0 ; i < newLine.Length; i++)
+            {
+                if(newLine[i] != line[i])
+                {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+
         static void Main(string[] args)
         {
-            int[] myArray = { 3, 5, 6, 8, 9 };
-            Console.WriteLine("1) Первый элемент, 2) Последний эелемент, 3) Любой элемент");
-            int k = int.Parse(Console.ReadLine());
-            Console.Write("Введите элемент: ");
-            int number = int.Parse(Console.ReadLine());
-            switch (k)
+            Console.Write("Введите строку: ");
+            string getLine = Console.ReadLine();
+
+            if(getLine == String.Empty)
             {
-                case 1:
-                    ChangeFirstElement(ref myArray, number);
-                    break;
-                case 2:
-                    ChangeLastElement(ref myArray, number);
-                    break;
-                case 3:
-                    Console.Write("Введите индекс элемента");
-                    int index = int.Parse(Console.ReadLine());
-                    ChangeElement(ref myArray, index, number);
-                    break;
-                default: Console.WriteLine("Я не знаю такой команды."); break;
+                Console.WriteLine("Нельзя вводит пустую строку!");
+                Thread.Sleep(3000);
+                Environment.Exit(0);
             }
+
+            char[] getLetters = new char[getLine.Length];
+            GetLetters(getLine, ref getLetters);
+            //bool result = ;
+
+            //if (result)
+            //{
+            //    Console.WriteLine("Строка является палиндромом.");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Строка не является палиндромом.");
+            //}
+
+            Thread.Sleep(3000);
         }
     }
 }

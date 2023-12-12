@@ -18,7 +18,7 @@ namespace ConsoleApp3
                 }
                 catch(FormatException)
                 {
-                    Console.WriteLine($"При конвертации произошла ошибка с этим элементом: {stringArray[i]}");                    
+                    Console.WriteLine($"При конвертации произошла ошибка с этим элементом: {stringArray[i]}");
                 }
             }
         }
