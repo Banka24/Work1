@@ -12,36 +12,36 @@ namespace ConsoleApp1
         static void BetterResize(ref char[] array)
         {
             int size = 0;
-            foreach(char i in array)
+            foreach (char i in array)
             {
-                if(i != '\0')
+                if (i != '\0')
                 {
-                    size++;                   
+                    size++;
                 }
             }
             Array.Resize(ref array, size);
         }
 
-        static char[] GetLetters(in string getLine, ref char[] setChars)
+        static char[] CleanString(string input)
         {
-            for (int i = 0; i < getLine.Length; i++)
+            string cleanedString = "";
+            foreach (char c in input)
             {
-                if (Char.IsLetterOrDigit(getLine[i]))
+                if (char.IsLetterOrDigit(c))
                 {
-                    setChars[i] = getLine[i];
+                    cleanedString += char.ToLower(c);
                 }
             }
-            BetterResize(ref setChars);
-            return setChars;
+            return cleanedString.ToCharArray();
         }
 
-        static bool IsPalendrom(in char[] charArray)
+        static bool IsPalindrome(char[] charArray)
         {
             bool result = true;
             char[] newLine = charArray.Reverse().ToArray();
-            for (int i = 0 ; i < newLine.Length; i++)
+            for (int i = 0; i < newLine.Length; i++)
             {
-                if(newLine[i] != charArray[i])
+                if (newLine[i] != charArray[i])
                 {
                     result = false;
                     break;
@@ -53,20 +53,19 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             Console.Write("Введите строку: ");
-            string getLine = Console.ReadLine();
+            string input = Console.ReadLine();
 
-            if(getLine == String.Empty)
+            if (string.IsNullOrEmpty(input))
             {
-                Console.WriteLine("Нельзя вводит пустую строку!");
-                Thread.Sleep(3000);
+                Console.WriteLine("Нельзя вводить пустую строку!");
                 Environment.Exit(0);
             }
 
-            char[] getLetters = new char[getLine.Length];
-            char[] setChars = GetLetters(getLine, ref getLetters);
-            bool result = IsPalendrom(setChars);
+            char[] charArray = CleanString(input);
 
-            if (result)
+            bool isPalindrome = IsPalindrome(charArray);
+
+            if (isPalindrome)
             {
                 Console.WriteLine("Строка является палиндромом.");
             }
@@ -75,7 +74,7 @@ namespace ConsoleApp1
                 Console.WriteLine("Строка не является палиндромом.");
             }
 
-            Thread.Sleep(3000);
+            Console.ReadLine();
         }
     }
 }
