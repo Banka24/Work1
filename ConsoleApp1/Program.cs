@@ -19,10 +19,10 @@ namespace ConsoleApp1
                     size++;                   
                 }
             }
-            //Array.Resize(ref array, size);
+            Array.Resize(ref array, size);
         }
 
-        static void GetLetters(in string getLine, ref char[] setChars)
+        static char[] GetLetters(in string getLine, ref char[] setChars)
         {
             for (int i = 0; i < getLine.Length; i++)
             {
@@ -32,16 +32,16 @@ namespace ConsoleApp1
                 }
             }
             BetterResize(ref setChars);
-            
+            return setChars;
         }
 
-        static bool IsPalendrom(in string line)
+        static bool IsPalendrom(in char[] charArray)
         {
             bool result = true;
-            char[] newLine = line.Reverse().ToArray();
+            char[] newLine = charArray.Reverse().ToArray();
             for (int i = 0 ; i < newLine.Length; i++)
             {
-                if(newLine[i] != line[i])
+                if(newLine[i] != charArray[i])
                 {
                     result = false;
                     break;
@@ -63,17 +63,17 @@ namespace ConsoleApp1
             }
 
             char[] getLetters = new char[getLine.Length];
-            GetLetters(getLine, ref getLetters);
-            //bool result = ;
+            char[] setChars = GetLetters(getLine, ref getLetters);
+            bool result = IsPalendrom(setChars);
 
-            //if (result)
-            //{
-            //    Console.WriteLine("Строка является палиндромом.");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Строка не является палиндромом.");
-            //}
+            if (result)
+            {
+                Console.WriteLine("Строка является палиндромом.");
+            }
+            else
+            {
+                Console.WriteLine("Строка не является палиндромом.");
+            }
 
             Thread.Sleep(3000);
         }
